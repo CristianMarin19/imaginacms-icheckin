@@ -2,10 +2,10 @@
 
 namespace Modules\Icheckin\Transformers;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Iprofile\Transformers\UserTransformer;
 
-class RequestTransformer extends Resource
+class RequestTransformer extends JsonResource
 {
   public function toArray($request)
   {
@@ -18,7 +18,7 @@ class RequestTransformer extends Resource
       'checkinBy' => new UserTransformer($this->whenLoaded('checkinBy')),
       'checkoutBy' => new UserTransformer($this->whenLoaded('checkoutBy')),
     ];
-    
+
     return $item;
   }
 }

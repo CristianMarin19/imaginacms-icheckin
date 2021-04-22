@@ -2,10 +2,10 @@
 
 namespace Modules\Icheckin\Transformers;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Iprofile\Transformers\UserTransformer;
 
-class JobTransformer extends Resource
+class JobTransformer extends JsonResource
 {
   public function toArray($request)
   {
@@ -14,7 +14,7 @@ class JobTransformer extends Resource
       'title' => $this->when($this->title, $this->title),
       'status' => $this->when($this->status, $this->status)
     ];
-    
+
     return $item;
   }
 }
