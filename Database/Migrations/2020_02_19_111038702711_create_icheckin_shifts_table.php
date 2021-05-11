@@ -16,7 +16,7 @@ class CreateIcheckinShiftsTable extends Migration
       $table->engine = 'InnoDB';
       $table->increments('id');
       
-      $table->timestamp('checkin_at');
+      $table->timestamp('checkin_at')->nullable();
       $table->timestamp('checkout_at')->nullable();
       $table->unsignedInteger('checkin_by')->nullable();
       $table->unsignedInteger('checkout_by')->nullable();

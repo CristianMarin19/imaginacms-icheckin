@@ -14,8 +14,8 @@ class ShiftTransformer extends JsonResource
     $diff = $date1->diff($date2);
     $item =  [
       'id' => $this->when($this->id, $this->id),
-      'checkinAt' => $this->when($this->checkin_at,  date('c', strtotime($this->checkin_at))),
-      'checkoutAt' => $this->when($this->checkout_at,date('c', strtotime($this->checkout_at))),
+      'checkinAt' => $this->when($this->checkin_at, $this->checkin_at),
+      'checkoutAt' => $this->when($this->checkout_at,$this->checkout_at),
       'now' => date('Y-m-d H:i:s'),
       'diff' => $diff,
       'geoLocation' =>$this->geo_location,
