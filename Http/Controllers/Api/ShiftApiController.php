@@ -11,6 +11,7 @@ use Modules\Icheckin\Http\Requests\UpdateShiftRequest;
 use Modules\Icheckin\Repositories\ShiftRepository;
 use Modules\Icheckin\Transformers\ShiftTransformer;
 use Modules\Ihelpers\Http\Controllers\Api\BaseApiController;
+use Carbon\Carbon;
 
 
 class ShiftApiController extends BaseApiController
@@ -109,7 +110,7 @@ class ShiftApiController extends BaseApiController
       //Validate Request
       $this->validateRequestApi(new CreateShiftRequest((array)$data));
       
-      $checkedAt = date("Y-m-d H:i:s");
+      $checkedAt =  Carbon::now()->format("Y-m-d H:i:s");
   
       // se asigna el checkin al formato fecha Y-m-d H:i:s
       $data["checkin_at"] = $checkedAt;
@@ -197,7 +198,7 @@ class ShiftApiController extends BaseApiController
       //Validate Request
       $this->validateRequestApi(new CreateShiftRequest((array)$data));
       
-      $checkedAt = date("Y-m-d H:i:s");
+      $checkedAt = Carbon::now()->format("Y-m-d H:i:s");
       
       // se asigna el checkin al formato fecha Y-m-d H:i:s
       $finalData["checkin_at"] = $checkedAt;
@@ -208,7 +209,7 @@ class ShiftApiController extends BaseApiController
       
       //Create item
       $shift = $this->service->create($finalData);
-      
+   
       //Response
       $response = ["data" => new ShiftTransformer($shift)];
       
