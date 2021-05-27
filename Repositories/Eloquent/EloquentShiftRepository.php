@@ -37,7 +37,7 @@ class EloquentShiftRepository extends EloquentBaseRepository implements ShiftRep
       }
       
       //Filter by date
-      if (isset($filter->date) && $filter->date->range != "disabled") {
+      if (isset($filter->date) && !empty($filter->date)) {
         $date = $filter->date;//Short filter date
         $date->field = $date->field ?? 'created_at';
         if (isset($date->from))//From a date
@@ -78,6 +78,9 @@ class EloquentShiftRepository extends EloquentBaseRepository implements ShiftRep
     /*== FIELDS ==*/
     if (isset($params->fields) && count($params->fields))
       $query->select($params->fields);
+  
+    //Return as query
+    if (isset($params->returnAsQuery) && $params->returnAsQuery) return $query;
     
     /*== REQUEST ==*/
     if (isset($params->page) && $params->page) {
