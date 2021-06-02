@@ -75,7 +75,7 @@ class ShiftApiController extends BaseApiController
       $dataEntity = $this->service->getItem($criteria, $params);
       
       //Break if no found item
-      if (!$dataEntity) throw new \Exception('Item not found', 404);
+      if (!$dataEntity) throw new \Exception('Item not found', 204);
       
       //Response
       $response = ["data" => $dataEntity ? new ShiftTransformer($dataEntity) :""];

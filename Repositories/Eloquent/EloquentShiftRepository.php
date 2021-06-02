@@ -60,6 +60,10 @@ class EloquentShiftRepository extends EloquentBaseRepository implements ShiftRep
         $query->where("checkin_by",$filter->repId);
       }
       
+      if (isset($filter->active) && $filter->active) {
+        $query->whereNull("checkout_at");
+      }
+      
       //add filter by search
       if (isset($filter->search) && $filter->search) {
         //find search in columns
