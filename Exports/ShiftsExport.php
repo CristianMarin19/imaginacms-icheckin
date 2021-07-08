@@ -24,12 +24,12 @@ use Modules\Icheckin\Transformers\ShiftTransformer;
 class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMapping, WithHeadings
 {
   use Exportable;
-  
+
   private $params;
   private $exportParams;
   private $inotification;
   private $service;
-  
+
   public function __construct($params, $exportParams, ShiftRepository $service)
   {
     $this->params = $params;
@@ -37,7 +37,7 @@ class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMappi
     $this->inotification = app('Modules\Notification\Services\Inotification');
     $this->service = $service;
   }
-  
+
   /**
    * @return \Illuminate\Support\Collection
    */
@@ -47,11 +47,11 @@ class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMappi
     //$this->params->returnAsQuery = true;
     $shifts = $this->service->getItemsBy($this->params);
     $shiftsToTransForm = ShiftTransformer::collection($shifts);
-    
+
     //Response
     return collect(json_decode(json_encode($shiftsToTransForm)));
   }
-  
+
   /**
    * Table headings
    *
@@ -70,7 +70,7 @@ class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMappi
       'Ubicación final'
     ];
   }
-  
+
   /**
    * @var Invoice $invoice
    */
@@ -87,7 +87,7 @@ class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMappi
       'Lat: '.($lead->geoLocation->checkout->latitude ?? ''). ' | Lng: '.($lead->geoLocation->checkout->longitude ?? ''),
     ];
   }
-  
+
   /**
    * //Handling Events
    *
@@ -112,6 +112,7 @@ class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMappi
           "title" => "Nuevo Reporte",
           "message" => "Tu reporte de Turnos está listo!",
           "link" => url(''),
+          "isAction" => true,
           "frontEvent" => [
             "name" => "isite.export.ready",
             "data" => $this->exportParams
