@@ -18,8 +18,8 @@ class IcheckinServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
-  
-  
+
+
   protected $middleware = [
     'checkout-can' => CanCheckout::class,
   ];
@@ -37,7 +37,7 @@ class IcheckinServiceProvider extends ServiceProvider
             $event->load('jobs', array_dot(trans('icheckin::jobs')));
             $event->load('requests', array_dot(trans('icheckin::requests')));
             $event->load('shifts', array_dot(trans('icheckin::shifts')));
-     
+
             $event->load('approvals', array_dot(trans('icheckin::approvals')));
             // append translations
 
@@ -51,9 +51,9 @@ class IcheckinServiceProvider extends ServiceProvider
     public function boot()
     {
       $this->registerMiddleware();
-        $this->publishConfig('icheckin', 'permissions');
-
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+      $this->publishConfig('icheckin', 'permissions');
+      $this->mergeConfigFrom($this->getModuleConfigFilePath('icheckin', 'cmsPages'), "asgard.icheckin.cmsPages");
+      $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
@@ -104,7 +104,7 @@ class IcheckinServiceProvider extends ServiceProvider
                 return new \Modules\Icheckin\Repositories\Cache\CacheShiftDecorator($repository);
             }
         );
-    
+
         $this->app->bind(
             'Modules\Icheckin\Repositories\ApprovalRepository',
             function () {
