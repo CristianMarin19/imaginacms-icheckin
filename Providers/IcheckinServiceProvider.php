@@ -53,6 +53,7 @@ class IcheckinServiceProvider extends ServiceProvider
       $this->registerMiddleware();
       $this->publishConfig('icheckin', 'permissions');
       $this->mergeConfigFrom($this->getModuleConfigFilePath('icheckin', 'cmsPages'), "asgard.icheckin.cmsPages");
+      $this->mergeConfigFrom($this->getModuleConfigFilePath('icheckin', 'cmsSidebar'), "asgard.icheckin.cmsSidebar");
       $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
