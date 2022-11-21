@@ -16,6 +16,7 @@ class IcheckinDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(IcheckinModuleTableSeeder::class);
         // $this->call("OthersTableSeeder");
     }
 }
