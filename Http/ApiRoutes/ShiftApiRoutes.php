@@ -13,7 +13,7 @@ $router->group(['prefix' => '/shifts','middleware' => ['auth:api']], function (R
   ]);
   
   $router->post('/checkin', [
-    'as' => 'ichecking.shifts.create',
+    'as' => 'ichecking.shifts.checkin.create',
     'uses' => 'ShiftApiController@checkin',
   
   ]);
@@ -32,7 +32,7 @@ $router->group(['prefix' => '/shifts','middleware' => ['auth:api']], function (R
   
   //Route update
   $router->put('/checkout/{criteria}', [
-    'as' => 'ichecking.shifts.update',
+    'as' => 'ichecking.shifts.checkout.update',
     'uses' => 'ShiftApiController@checkout',
     'middleware' => ['checkout-can']
   ]);
