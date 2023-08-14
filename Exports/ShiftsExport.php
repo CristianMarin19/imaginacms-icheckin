@@ -34,6 +34,7 @@ class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMappi
 
   public function __construct($params, $exportParams, ShiftRepository $service)
   {
+    $this->userId = \Auth::id();//Set for ReportQueue
     $this->params = $params;
     $this->exportParams = $exportParams;
     $this->inotification = app('Modules\Notification\Services\Inotification');
