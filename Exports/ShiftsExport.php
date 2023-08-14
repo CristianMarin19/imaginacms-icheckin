@@ -21,9 +21,11 @@ use Modules\Notification\Services\Inotification;
 use Modules\Icheckin\Repositories\ShiftRepository;
 use Modules\Icheckin\Transformers\ShiftTransformer;
 
+use Modules\Isite\Traits\ReportQueueTrait;
+
 class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMapping, WithHeadings
 {
-  use Exportable;
+  use Exportable, ReportQueueTrait;
 
   private $params;
   private $exportParams;
@@ -98,6 +100,7 @@ class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMappi
     return [
       // Event gets raised at the start of the process.
       BeforeExport::class => function (BeforeExport $event) {
+        $this->lockReport($this->exportParams->exportName);
       },
       // Event gets raised before the download/store starts.
       BeforeWriting::class => function (BeforeWriting $event) {
@@ -107,6 +110,7 @@ class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMappi
       },
       // Event gets raised at the end of the sheet process
       AfterSheet::class => function (AfterSheet $event) {
+        $this->unlockReport($this->exportParams->exportName);
         //Send pusher notification
         $this->inotification->to(['broadcast' => $this->params->user->id])->push([
           "title" => "Nuevo Reporte",
