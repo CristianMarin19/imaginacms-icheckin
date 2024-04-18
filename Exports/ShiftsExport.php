@@ -2,25 +2,30 @@
 
 namespace Modules\Icheckin\Exports;
 
-use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-//Events
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Events\AfterSheet;
+
+//Events
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\BeforeExport;
-use Maatwebsite\Excel\Events\BeforeSheet;
 use Maatwebsite\Excel\Events\BeforeWriting;
+use Maatwebsite\Excel\Events\BeforeSheet;
+use Maatwebsite\Excel\Events\AfterSheet;
+
 //Extra
+use Modules\Notification\Services\Inotification;
 use Modules\Icheckin\Repositories\ShiftRepository;
 use Modules\Icheckin\Transformers\ShiftTransformer;
 
+use Modules\Isite\Traits\ReportQueueTrait;
+
 class ShiftsExport implements FromCollection, WithEvents, ShouldQueue, WithMapping, WithHeadings
 {
-    use Exportable;
+  use Exportable, ReportQueueTrait;
 
     private $params;
 
